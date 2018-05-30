@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { Button } from 'antd-mobile';
 import { connect } from 'react-redux'
 import { addGun, removeGun, addGunAsync } from './index.redux'
-class App extends Component {
+
+
+@connect((state) => {
+  return { num: state}
+}, { addGun, removeGun, addGunAsync })
+export default class App extends Component {
   render() {
     
     return (
@@ -15,13 +20,6 @@ class App extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  return { num : state }
-}
-const actionCreaters = { addGun, removeGun, addGunAsync }
-
-App = connect(mapStateToProps, actionCreaters)(App)
-export default App;
 
 
 
