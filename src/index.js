@@ -1,16 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux'
 import { BrowserRouter,
-		 Route,
-		 Switch
+		 Route
 } from 'react-router-dom'
-import reducer from './reducer'
 import thunk from 'redux-thunk'
-import Auth from './Auth'
-import Dashboard from './Dashboard'
+import reducer from './reducer'
+import Login from './container/login/login'
+import Register from './container/register/register'
 
 let store = createStore(reducer, compose(applyMiddleware(thunk), window.devToolsExtension ? window.devToolsExtension() : f => f))
 
@@ -19,10 +17,8 @@ ReactDOM.render(
 	(<Provider store = {store}>
 		<BrowserRouter>
 			<div>
-				<Switch>
-					<Route path="/" exact component={Auth}></Route>
-					<Route path="/dashboard" component={Dashboard}></Route>
-				</Switch>
+				<Route path="/login" exact component={Login}></Route>
+				<Route path="/register" component={Register}></Route>
 				
 			</div>
 		</BrowserRouter>
