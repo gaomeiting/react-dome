@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { Button } from 'antd-mobile';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom'
+
 import { logIn } from './auth.redux'
+
 @connect(state => {
 	return { auth:state.auth }
 }, {
 	logIn
 })
 export default class Auth extends Component {
+
 	render() {
 		return (
 			<div>

@@ -3,7 +3,7 @@ import { Link, Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Button } from 'antd-mobile';
 import App from './App'
-import { logOut } from './auth.redux'
+import { logOut, getUserData } from './auth.redux'
 
 
 function erying() {
@@ -16,12 +16,17 @@ function qibinglian() {
 
 @connect(state => {
 	return {auth: state.auth}
-},{ logOut })
+},{ logOut, getUserData })
 export default class Dashboard extends Component {
+	componentDidMount() {
+		this.props.getUserData()
+	}
 	render() {
 		const app =(
 				<div>
 					<p>独立团</p>
+					<p>我的名字是{this.props.auth.name}</p>
+					<p>我的年龄是{this.props.auth.age}</p>
 					{this.props.auth.isAuth ? <Button type="primary" onClick={ () => this.props.logOut()}> 注销 </Button> : null}
 					<ul>
 						<li>

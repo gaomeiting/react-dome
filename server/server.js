@@ -12,21 +12,21 @@ db.on('connected', function() {
 let userSchema = new mongoose.Schema({name: String, age: String})
 const User = mongoose.model('User', userSchema);
 //创建数据
-User.create({
+/*User.create({
 	name: '小周',
 	age: '10'
 }, (err, doc) => {
 	if(!err) console.log(doc)
-})
-User.update({name: '李四'}, {'$set': {age: "112"}}, (err, doc) => {
+})*/
+/*User.update({name: '李四'}, {'$set': {age: "112"}}, (err, doc) => {
 		if(!err) {
 			console.log(doc)
 		}
-	})
-//删除一项
-/*User.remove({age: 18}, (err, doc) => {
-		console.log(doc)
 	})*/
+//删除一项
+User.remove({name: '李四'}, (err, doc) => {
+		console.log(doc)
+	})
 app.get('/', function(req, res) {
 	res.send('<h1>hello word!!</h1>')
 })
