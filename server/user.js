@@ -2,27 +2,66 @@ const express = require('express')
 const Router = express.Router()
 const model = require('./model')
 const User = model.getModel('user')
-
+const utils = require('utility')
+Router.get('/list', function(req, res) {
+	User.find({}, function(err, doc) {
+		return res.json({code: 1, data: doc})
+	})
+})
 Router.get('/info', function(req, res) {
-	res.json({code: 1})
+	const {userId} = req.cookies
+	if(!userId) {
+		return res.json({code: 1})
+	}
+	User.findOne({_id: userId}, function(err, doc) {
+		if(!err) {
+			console.log(userId)
+			return res.json({code: 0, user: doc})
+		}
+	})
 })
 Router.post('/register', function(req, res) {
 	const { name, pwd, type } = req.body;
 	User.findOne({name}, (err, doc) => {
 		if(!err && doc) {
-			res.json({code: 1, msg: '用户名已存在,换个名字试试'})
+			return res.json({code: 1, msg: '用户名已存在,换个名字试试'})
 		}
 		if(!doc) {
-			User.create({
+			new User({
 				name,
-				pwd,
+				pwd : Md5Pwd(pwd),
 				type
-			},(err, doc) => {
-				if(!err) res.json({ code: 0, user: {name: doc.name, type: doc.type} })
+			}).save((err, doc) => {
+				if(!err)
+					{
+						res.cookie('userId', doc._id)
+						return res.json({ code: 0, user: doc })
+						
+					}
 			})
 			
 		}
 
 	})
 })
+Router.post('/login', function(req, res) {
+	const { name, pwd } = req.body;
+	User.findOne({name, pwd: Md5Pwd(pwd)},{ pwd: 0 }, (err, doc) => {
+		if(!err && !doc) {
+			return res.json({code: 1, msg: '用户名或密码错误'})
+		}
+		if(doc) {
+
+			res.cookie('userId', doc._id)
+			return res.json({code: 0, user: doc})
+			
+		}
+
+	})
+})
+function Md5Pwd(pwd) {
+	const salt = 'imooc_is_good_3957x8yza6!@#IUHJh'
+	let newPwd = pwd + salt;
+	return utils.md5(utils.md5(newPwd))
+}
 module.exports = Router;

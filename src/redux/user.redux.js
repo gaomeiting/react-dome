@@ -52,6 +52,29 @@ export function register(name, pwd, pwdRepeat, type) {
 	}
 	
 }
+export function login(name, pwd) {
+	return dispatch => {
+		if(!name || !pwd ) {
+			dispatch(setErrMsg({ errMsg: '用户名密码不能为空' }))
+			return;
+		}
+		
+		axios.post('/user/login', {
+			name,
+			pwd
+		}).then(res => {
+			const data = res.data;
+			if(data.code === 0 ) {
+				dispatch(setUserInfo(data.user))
+				goNext.call( this, data.user.type )
+			}
+			else {
+				dispatch(setErrMsg({ errMsg: data.msg}))
+			}
+		})
+	}
+	
+}
 function goNext(type) {
 	switch(type) {
 		case 0:

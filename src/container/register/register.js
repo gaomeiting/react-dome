@@ -30,7 +30,7 @@ export default class Register extends Component {
 						<InputItem type='password' placeholder="请输入密码" onChange={(v) => this.props.setUserInfo({'pwd': v})}>密码</InputItem>
 						<InputItem type='password' placeholder="请确认密码" onChange={(v) => this.props.setUserInfo({'pwdRepeat': v})}>确认密码</InputItem>
 						{data.map(i => (
-				          <RadioItem key={i.value} checked={user.type === i.value} onChange={(v) => this.props.setUserInfo({'type': v.value})}>
+				          <RadioItem key={i.value} checked={user.type === i.value} onChange={() => this.props.setUserInfo({'type': i.value})}>
 				            {i.label}
 				          </RadioItem>
 				        ))}

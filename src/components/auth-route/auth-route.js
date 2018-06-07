@@ -9,8 +9,12 @@ export default class AuthRoute extends React.Component {
 	componentDidMount() {
 		axios.get('/user/info').then(res => {
 			if(res.data.code === 0) {
-				console.log('已经登录了')
-				this.props.history.push('/boss')
+				if(!res.data.user.type) {
+					this.props.history.push('/genius')
+				}
+				else {
+					this.props.history.push('/boss')
+				}
 			}
 			else {
 				//跳转到登录页
