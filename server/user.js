@@ -15,7 +15,6 @@ Router.get('/info', function(req, res) {
 	}
 	User.findOne({_id: userId}, function(err, doc) {
 		if(!err) {
-			console.log(userId)
 			return res.json({code: 0, user: doc})
 		}
 	})
@@ -40,6 +39,19 @@ Router.post('/register', function(req, res) {
 					}
 			})
 			
+		}
+
+	})
+})
+Router.post('/updata', function(req, res) {
+	const { _id, company, job, salary, desc, avatar } = req.body;
+	User.findByIdAndUpdate(_id,{company, job, salary, desc, avatar}, (err, doc) => {
+		if(!err && doc) {
+			//更新数据
+			return res.json({code: 0, user: doc})
+		}
+		if(!doc) {
+			return res.json({code: 1, msg: '用户不存在'})
 		}
 
 	})

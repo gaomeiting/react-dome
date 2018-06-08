@@ -11,11 +11,11 @@ const models = {
 		'name': { 'type': String, 'require': true},
 		'pwd': { 'type': String, 'require': true},
 		'type': { 'type': Number, 'require': true},
-		'avatar': { 'type': String },
+		'avatar': { 'type': Object },
 		'desc': { 'type': String },
-		'title': { 'type': String },
+		'job': { 'type': String },
 		'company': { 'type': String },
-		'money': { 'type': Number }
+		'salary': { 'type': String }
 	},
 	chart: {}
 }
@@ -37,6 +37,18 @@ User.create({
 	age: '10'
 }, (err, doc) => {
 	if(!err) console.log(doc)
+})
+new User({
+	name,
+	pwd : Md5Pwd(pwd),
+	type
+}).save((err, doc) => {
+	if(!err)
+		{
+			res.cookie('userId', doc._id)
+			return res.json({ code: 0, user: doc })
+			
+		}
 })
 User.update({name: '李四'}, {'$set': {age: "112"}}, (err, doc) => {
 		if(!err) {
