@@ -4,8 +4,9 @@ const model = require('./model')
 const User = model.getModel('user')
 const utils = require('utility')
 Router.get('/list', function(req, res) {
-	User.find({}, function(err, doc) {
-		return res.json({code: 1, data: doc})
+	const {type} = req.query
+	User.find({type}, function(err, doc) {
+		return res.json({code: 0, data: doc})
 	})
 })
 Router.get('/info', function(req, res) {

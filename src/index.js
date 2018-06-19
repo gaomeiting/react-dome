@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux'
 import { BrowserRouter,
-		 Route
+		 Route,
+		 Switch
 } from 'react-router-dom'
 import thunk from 'redux-thunk'
 import reducer from './reducer'
@@ -14,7 +15,9 @@ import GeniusInfo from './container/genius-info/genius-info'
 import Genius from './container/genius/genius'
 import Register from './container/register/register'
 import AuthRoute from './components/auth-route/auth-route'
+import DashBoard from './components/dash-board/dash-board'
 import './config'
+import './index.css'
 let store = createStore(reducer, compose(applyMiddleware(thunk), window.devToolsExtension ? window.devToolsExtension() : f => f))
 
 
@@ -23,12 +26,14 @@ ReactDOM.render(
 		<BrowserRouter>
 			<div>
 				<AuthRoute></AuthRoute>
-				<Route path='/boss' component={Boss}></Route>
-				<Route path='/bossInfo' component={BossInfo}></Route>
-				<Route path='/geniusInfo' component={GeniusInfo}></Route>
-				<Route path='/genius' component={Genius}></Route>
-				<Route path="/login" exact component={Login}></Route>
-				<Route path="/register" component={Register}></Route>
+				<Switch>
+					<Route path='/bossInfo' component={BossInfo}></Route>
+					<Route path='/geniusInfo' component={GeniusInfo}></Route>
+					<Route path="/login" exact component={Login}></Route>
+					<Route path="/register" component={Register}></Route>
+					<Route component={DashBoard}></Route>
+				</Switch>
+
 				
 			</div>
 		</BrowserRouter>

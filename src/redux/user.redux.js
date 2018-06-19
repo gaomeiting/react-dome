@@ -43,8 +43,10 @@ export function register(name, pwd, pwdRepeat, type) {
 			const data = res.data;
 			if(data.code === 0 ) {
 				dispatch(setUserInfo(data.user))
-
-					//goNextInfo.call( this, data.user.type )
+				const url = !data.user.type ? '/geniusInfo' : '/bossInfo'
+				this.history.push(url) 
+				console.log(this)
+				//goNextInfo.call( this, data.user.type )
 			}
 			else {
 				dispatch(setErrMsg({ errMsg: data.msg}))
@@ -62,7 +64,12 @@ export function updata(obj) {
 		}).then(res => {
 			const data = res.data;
 			if(data.code === 0 ) {
-				dispatch(setUserInfo({job, salary, desc, avatar }))
+				dispatch(setUserInfo({
+					job,
+					salary,
+					desc,
+					avatar
+				}))
 				goNext.call( this, data.user.type )
 			}
 			else {
@@ -99,19 +106,19 @@ export function login(name, pwd) {
 function goNext(type) {
 	switch(type) {
 		case 0:
-			this.history.push('/genius')
+			this.history.push('/boss')
 		break;
 		case 1:
-			this.history.push('/boss')
+			this.history.push('/genius')
 	}
 }
 function goNextInfo(type) {
 	switch(type) {
 		case 0:
-			this.history.push('/geniusInfo')
+			this.history.push('/bossInfo')
 		break;
 		case 1:
-			this.history.push('/bossInfo')
+			this.history.push('/geniusInfo')
 	}
 }
 
