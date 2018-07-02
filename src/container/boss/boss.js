@@ -2,15 +2,12 @@ import React from 'react';
 import {
 	connect
 } from 'react-redux';
+
 import {
 	getUserList
 } from '../../redux/userList.redux';
-import {
-	Card,
-	WingBlank,
-	WhiteSpace
-} from 'antd-mobile'
 
+import CardList from '../../components/card-list/card-list'
 @connect(state => {
 	return {
 		boss: state.userList.list
@@ -24,27 +21,22 @@ export default class Boss extends React.Component {
 		this.props.getUserList({
 			type: 1
 		})
+		/*socket.on('news', function(data) {
+			console.log(data);
+			socket.emit('my other event', {
+				my: 'data'
+			});
+		});*/
 	}
 	render() {
+
 		const list = this.props.boss;
-		const listItems = list.map((item) => {
-			return <WingBlank key={item._id} size="lg">
-				    <WhiteSpace size="lg" />
-				    <Card>
-				      <Card.Header
-				        title={item.name}
-				        thumb={item.avatar.icon}
-				        extra={<span>{item.job}</span>}
-				      />
-				      <Card.Body>
-				        <div>{item.desc}</div>
-				      </Card.Body>
-				    </Card>
-				    <WhiteSpace size="lg" />
-				  </WingBlank>
-		});
+		//console.log(list, "")
 		return (
-			<div>{listItems}</div>
+
+			{
+				list
+			} ? <CardList list={ list } ></CardList> : null
 		);
 	}
 }

@@ -1,16 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux'
-import { BrowserRouter,
-		 Route,
-		 Switch
+import {
+	createStore,
+	applyMiddleware,
+	compose
+} from 'redux';
+import {
+	Provider
+} from 'react-redux'
+import {
+	BrowserRouter,
+	Route,
+	Switch
 } from 'react-router-dom'
 import thunk from 'redux-thunk'
 import reducer from './reducer'
 import Login from './container/login/login'
 import BossInfo from './container/boss-info/boss-info'
 import Boss from './container/boss/boss'
+import Chat from './container/chat/chat'
 import GeniusInfo from './container/genius-info/genius-info'
 import Genius from './container/genius/genius'
 import Register from './container/register/register'
@@ -30,6 +38,7 @@ ReactDOM.render(
 					<Route path='/bossInfo' component={BossInfo}></Route>
 					<Route path='/geniusInfo' component={GeniusInfo}></Route>
 					<Route path="/login" exact component={Login}></Route>
+					<Route path="/chat/:id" exact component={Chat}></Route>
 					<Route path="/register" component={Register}></Route>
 					<Route component={DashBoard}></Route>
 				</Switch>
@@ -38,7 +47,5 @@ ReactDOM.render(
 			</div>
 		</BrowserRouter>
 	</Provider>),
-	 document.getElementById('root')
-);	
-
-
+	document.getElementById('root')
+);

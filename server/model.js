@@ -8,24 +8,68 @@ db.on('connected', function() {
 })
 const models = {
 	user: {
-		'name': { 'type': String, 'require': true},
-		'pwd': { 'type': String, 'require': true},
-		'type': { 'type': Number, 'require': true},
-		'avatar': { 'type': Object },
-		'desc': { 'type': String },
-		'job': { 'type': String },
-		'company': { 'type': String },
-		'salary': { 'type': String }
+		'name': {
+			'type': String,
+			'require': true
+		},
+		'pwd': {
+			'type': String,
+			'require': true
+		},
+		'type': {
+			'type': Number,
+			'require': true
+		},
+		'avatar': {
+			'type': Object
+		},
+		'desc': {
+			'type': String
+		},
+		'job': {
+			'type': String
+		},
+		'company': {
+			'type': String
+		},
+		'salary': {
+			'type': String
+		}
 	},
-	chart: {}
+	chat: {
+		'chatId': {
+			'type': String,
+			'require': true
+		},
+		'from': {
+			'type': String,
+			'require': true
+		},
+		'to': {
+			'type': String,
+			'require': true
+		},
+		'content': {
+			'type': String,
+			'require': true
+		},
+		'read': {
+			'type': Boolean,
+			default: false
+		},
+		'created_on': {
+			'type': Number,
+			default: new Date().getTime()
+		},
+	}
 }
-for(let m in models) {
-	mongoose.model(m,new mongoose.Schema(models[m]))
+for (let m in models) {
+	mongoose.model(m, new mongoose.Schema(models[m]))
 }
 module.exports = {
 	getModel: function(name) {
 		return mongoose.model(name)
-	} 
+	}
 }
 /*
 //建表
